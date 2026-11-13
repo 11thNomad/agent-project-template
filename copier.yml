@@ -22,3 +22,10 @@ gated_paths:
   type: str
   help: Paths that need the owner's approval to change, separated by commas
   default: "CLAUDE.md, SPEC.md"
+  # Rejects an answer that would render no paths under "Approval gates":
+  # empty, whitespace only, or only commas. The expression is the one
+  # template/CLAUDE.md.jinja uses to list the paths.
+  validator: >-
+    {% if not (gated_paths.split(',') | map('trim') | select | list) %}
+    At least one gated path is needed.
+    {% endif %}

@@ -155,3 +155,17 @@ def test_a_gated_path_given_as_an_answer_appears_in_the_gates(tmp_path: Path) ->
     gates = section_body(read(project, "CLAUDE.md"), "Approval gates")
     listed = re.findall(r"^- `(.+)`$", gates, flags=re.MULTILINE)
     assert listed == ["infra/deploy.yml"]
+
+
+@pytest.mark.parametrize(
+    "answer",
+    ["", "   ", ",", " , ,, "],
+    ids=["empty", "whitespace only", "commas only", "commas and spaces"],
+)
+def test_an_answer_with_no_gated_paths_is_rejected(tmp_path: Path, answer: str) -> None:
+    # Copier applies the question's validator to answers passed as data and
+    # raises ValueError with the validator's message.
+    answers = {**ANSWERS, "gated_paths": answer}
+    with pytest.raises(ValueError, match="At least one gated path is needed"):
+        render(tmp_path, answers)
+    assert not (tmp_path / "generated-project").exists()

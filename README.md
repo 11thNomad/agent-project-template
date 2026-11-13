@@ -39,7 +39,7 @@ Copier asks four questions:
 | `project_name` | The project's name, as it should appear in headings. |
 | `purpose` | One line saying what the project is for. |
 | `github_handle` | The owner's GitHub handle, without the @. |
-| `gated_paths` | Paths that need the owner's approval to change, separated by commas. The default is `CLAUDE.md, SPEC.md`. |
+| `gated_paths` | Paths that need the owner's approval to change, separated by commas. The default is `CLAUDE.md, SPEC.md`. At least one path is needed: Copier rejects an answer that is empty or holds only spaces and commas. |
 
 To skip the prompts, pass each answer with `-d`, for example `-d "gated_paths=CLAUDE.md, SPEC.md, contracts/"`.
 
@@ -61,7 +61,7 @@ Copier finds the template through the path saved in the project's `.copier-answe
 .venv\Scripts\python -m pytest
 ```
 
-The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, and that the gated paths given as an answer appear under "Approval gates".
+The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, that the gated paths given as an answer appear under "Approval gates", and that an answer with no gated paths is rejected.
 
 Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package.
 
