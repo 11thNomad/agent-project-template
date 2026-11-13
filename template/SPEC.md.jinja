@@ -1,0 +1,40 @@
+# {{ project_name }}: spec
+
+{{ purpose }}
+
+This file is the source of truth for the project. Builder sessions read it before changing anything and add nothing it does not name. `CLAUDE.md` holds the rules for sessions and any amendments the owner has made to this spec.
+
+Each section below starts with a note on what belongs there. Replace the note with the real content.
+
+## Purpose and scope
+
+What the project is for, who uses it, and what it does. Name what is out of scope as plainly as what is in.
+
+## What done looks like
+
+Numbered exit criteria that code can check. Each one names the command or test that decides it, so no criterion rests on a person's or a model's opinion.
+
+## Architecture
+
+The parts of the system, what each one is responsible for, and how they pass data to each other. Say which parts are plain code and which call a model.
+
+## Contracts and data formats
+
+The data that crosses each boundary: schemas, file formats and record layouts. Code validates everything against these.
+
+## Fixed constraints and approval gates
+
+Limits that hold for the whole build, such as budget, tools and access. Then the changes that need the owner's approval. The gated paths are listed in `CLAUDE.md`, "Approval gates".
+
+## Open questions
+
+Decisions not yet made. For each, say who decides and which build step it blocks. A builder session that reaches one stops and asks the owner.
+
+## Build order and handoff
+
+One row per step, in the order they are built. A step is small enough for one builder session, and its "done when" is something code can check. Every step ends with the full test suite passing.
+
+| Step | What is built | Done when |
+| --- | --- | --- |
+| 1 | | |
+| 2 | | |

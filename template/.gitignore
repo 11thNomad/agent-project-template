@@ -1,0 +1,14 @@
+# Secrets and local settings never enter the repository.
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Operating system files
+.DS_Store
+Thumbs.db

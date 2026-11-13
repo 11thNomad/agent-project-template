@@ -1,0 +1,24 @@
+# Copier configuration for agent-project-template.
+# Reference: https://copier.readthedocs.io/en/stable/configuring/
+# Written against Copier 9.19.1 (pinned in requirements.txt).
+
+# Only the files under template/ go into a generated project. This repository's
+# own README, tests and requirements stay out of it.
+_subdirectory: template
+
+project_name:
+  type: str
+  help: Project name, as it should appear in headings
+
+purpose:
+  type: str
+  help: One-line purpose of the project
+
+github_handle:
+  type: str
+  help: The owner's GitHub handle, without the @
+
+gated_paths:
+  type: str
+  help: Paths that need the owner's approval to change, separated by commas
+  default: "CLAUDE.md, SPEC.md"

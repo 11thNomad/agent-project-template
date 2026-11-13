@@ -1,0 +1,63 @@
+# {{ project_name }}: rules for builder sessions
+
+{{ purpose }}
+
+`SPEC.md` is the source of truth for this project. Read it before changing anything. The owner is the GitHub user `{{ github_handle }}`.
+
+## Owner decisions
+
+Decisions the owner has made that `SPEC.md` does not record. Only the owner adds entries. Each entry starts with the date it was made, written `YYYY-MM-DD`.
+
+- None yet.
+
+## Amendments to the spec
+
+Changes the owner has made to `SPEC.md` since it was written. Where these differ from `SPEC.md`, these win. Only the owner adds entries. Each entry starts with the date it was made, written `YYYY-MM-DD`.
+
+- None yet.
+
+## Hard rules
+
+1. Add nothing `SPEC.md` does not name. When the spec is ambiguous, stop and ask the owner.
+2. Secrets never enter the repository: no keys, tokens or passwords in code, config, tests, logs or commit messages.
+3. No deception. AI involvement is stated wherever work was drafted or run by AI.
+4. Real-world actions (creating accounts, making payments, publishing, spending money) happen only by the owner's hand or explicit sign-off.
+5. Results come from code and tests, never from a session's or a model's own report.
+
+## Approval gates
+
+These need the owner's approval.
+
+Any change to these paths:
+
+{% for path in gated_paths.split(',') | map('trim') | select -%}
+- `{{ path }}`
+{% endfor %}
+These kinds of change, wherever they are made:
+
+- a change to these rules or to this list of gates
+- a new tool, account or API access
+- any spending
+- anything published outside the repository
+
+Work on a branch. Never commit gated paths to the main branch directly, and never merge your own branch.
+
+## How work is organised
+
+- **Orchestrator session:** holds the build order (`SPEC.md`, "Build order and handoff"), hands out one step at a time, and presents each milestone to the owner.
+- **Builder sessions:** do one step, with tests, then stop and report.
+- Every step ends with the full test suite passing.
+
+## Evidence and improvement
+
+- Results come from code and tests, never from a session's or a model's own report. A report names the command that was run and shows its output.
+- Every proposed change to a rule, prompt or model is a challenger. It merges only with evidence against the incumbent and the owner's approval.
+- The number of runs is fixed before testing. Do not add runs after seeing results.
+
+## Commands
+
+The commands a builder session needs, each with a note on what it does. The command that runs the full test suite comes first.
+
+```
+# Replace this line with the command that runs the full test suite.
+```
