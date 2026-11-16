@@ -17,7 +17,7 @@ The rules describe one way of working. One orchestrator session holds the build 
 
 ## Make a new project
 
-You need Python 3.10 or later and git. Set up once, from this folder:
+You need Python 3.11, 3.12, 3.13 or 3.14, and git. Set up once, from this folder:
 
 ```
 python -m venv .venv
@@ -63,7 +63,7 @@ Copier finds the template through the path saved in the project's `.copier-answe
 
 The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, that the gated paths given as an answer appear under "Approval gates", and that an answer with no gated paths is rejected.
 
-Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package.
+Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package. The pinned packages do not install on Python 3.10. Python 3.15 is not covered: the pinned PyYAML has no wheel for it.
 
 ## AI involvement
 
