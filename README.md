@@ -56,7 +56,7 @@ Copier finds the template through the address saved in the project's `.copier-an
 
 GitHub runs the tests on every push to `main` and on every pull request. The workflow is `.github/workflows/tests.yml`. The badge at the top of this page shows its status.
 
-To run the tests yourself, you need a local copy of this repository. The tests need Python 3.11, 3.12, 3.13 or 3.14. Set up once, from this folder:
+To run the tests yourself, you need a local copy of this repository. The tests support Python 3.11, 3.12, 3.13 and 3.14. Set up once, from this folder:
 
 ```
 python -m venv .venv
@@ -75,7 +75,7 @@ The tests run offline and make no model calls. They render the template into a t
 
 The workflow runs the commands above on Python 3.11, 3.12, 3.13 and 3.14, each on Linux (`ubuntu-latest`) and on Windows (`windows-latest`). It does not cover macOS.
 
-Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package. The pinned packages do not install on Python 3.10. Python 3.15 is not covered: the pinned PyYAML has no wheel for it.
+Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package. The pinned packages do not install on Python 3.10. Python 3.15 is not covered: the pinned PyYAML has no wheel for it, so pip has to build it from source.
 
 ## AI involvement
 

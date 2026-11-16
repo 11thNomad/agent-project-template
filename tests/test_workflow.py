@@ -162,7 +162,7 @@ def test_workflow_covers_the_python_versions_the_readme_claims(
 ) -> None:
     in_matrix = job["strategy"]["matrix"]["python-version"]
     assert all(isinstance(version, str) for version in in_matrix), "quote the versions"
-    assert versions_after(tests_section, "The tests need Python") == in_matrix
+    assert versions_after(tests_section, "The tests support Python") == in_matrix
     assert versions_after(tests_section, "runs the commands above on Python") == in_matrix
 
     # The version the README says the tests were run with by hand.
