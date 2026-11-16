@@ -1,5 +1,7 @@
 # agent-project-template
 
+![tests](https://github.com/11thNomad/agent-project-template/actions/workflows/tests.yml/badge.svg)
+
 A [Copier](https://copier.readthedocs.io/) template for projects that are built by several AI agent sessions under one owner. A project made from it starts with three things: a spec skeleton, rules for builder sessions, and approval gates.
 
 ## What a new project contains
@@ -17,20 +19,15 @@ The rules describe one way of working. One orchestrator session holds the build 
 
 ## Make a new project
 
-You need Python 3.10 or later and git. Set up once, from this folder:
+You need git and Copier. Install Copier first. Its [installation instructions](https://copier.readthedocs.io/en/stable/#installation) give the Python and git versions it needs and the ways to install it. This template is tested with Copier 9.19.1.
+
+Then one command makes a project. Run it from the folder where the new project should go:
 
 ```
-python -m venv .venv
-.venv\Scripts\python -m pip install -r requirements.txt
+copier copy gh:11thNomad/agent-project-template my-new-project
 ```
 
-Then one command makes a project. Run it from the folder that contains this one:
-
-```
-agent-project-template\.venv\Scripts\copier copy agent-project-template my-new-project
-```
-
-These commands are written for Windows. On macOS or Linux, use `.venv/bin/` in place of `.venv\Scripts\`.
+`gh:11thNomad/agent-project-template` is Copier's short form for `https://github.com/11thNomad/agent-project-template`. Copier fetches the template from that address, so you do not need a local copy of this repository.
 
 Copier asks four questions:
 
@@ -50,24 +47,39 @@ Copier uses the template's latest git tag. When the template has no tags, it use
 The project must be a git repository with nothing uncommitted. Run this from the same folder as the copy command:
 
 ```
-agent-project-template\.venv\Scripts\copier update my-new-project
+copier update my-new-project
 ```
 
-Copier finds the template through the path saved in the project's `.copier-answers.yml`. That path is the one typed in the copy command, so it only resolves from the folder where that command was run. Do not edit `.copier-answers.yml` by hand.
+Copier finds the template through the address saved in the project's `.copier-answers.yml`. That address is the one typed in the copy command. Do not edit `.copier-answers.yml` by hand.
 
 ## Run the tests
+
+GitHub runs the tests on every push to `main` and on every pull request. The workflow is `.github/workflows/tests.yml`. The badge at the top of this page shows its status.
+
+To run the tests yourself, you need a local copy of this repository. The tests support Python 3.11, 3.12, 3.13 and 3.14. Set up once, from this folder:
+
+```
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+```
+
+Then run the tests:
 
 ```
 .venv\Scripts\python -m pytest
 ```
 
-The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, that the gated paths given as an answer appear under "Approval gates", and that an answer with no gated paths is rejected.
+These commands are written for Windows. On macOS or Linux, use `.venv/bin/` in place of `.venv\Scripts\`.
 
-Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package.
+The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, that the gated paths given as an answer appear under "Approval gates", and that an answer with no gated paths is rejected. They also check that the workflow agrees with this README.
+
+The workflow runs the commands above on Python 3.11, 3.12, 3.13 and 3.14, each on Linux (`ubuntu-latest`) and on Windows (`windows-latest`). It does not cover macOS.
+
+Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package. The pinned packages do not install on Python 3.10. Python 3.15 is not covered: the pinned PyYAML has no wheel for it, so pip has to build it from source.
 
 ## AI involvement
 
-This template, its tests and this README were drafted with AI assistance (Claude).
+This template, its tests, its GitHub workflow and this README were drafted with AI assistance (Claude).
 
 ## Licence
 
