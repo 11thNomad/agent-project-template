@@ -17,20 +17,15 @@ The rules describe one way of working. One orchestrator session holds the build 
 
 ## Make a new project
 
-You need Python 3.11, 3.12, 3.13 or 3.14, and git. Set up once, from this folder:
+You need git and Copier. Install Copier first. Its [installation instructions](https://copier.readthedocs.io/en/stable/#installation) give the Python and git versions it needs and the ways to install it. This template is tested with Copier 9.19.1.
+
+Then one command makes a project. Run it from the folder where the new project should go:
 
 ```
-python -m venv .venv
-.venv\Scripts\python -m pip install -r requirements.txt
+copier copy gh:11thNomad/agent-project-template my-new-project
 ```
 
-Then one command makes a project. Run it from the folder that contains this one:
-
-```
-agent-project-template\.venv\Scripts\copier copy agent-project-template my-new-project
-```
-
-These commands are written for Windows. On macOS or Linux, use `.venv/bin/` in place of `.venv\Scripts\`.
+`gh:11thNomad/agent-project-template` is Copier's short form for `https://github.com/11thNomad/agent-project-template`. Copier fetches the template from that address, so you do not need a local copy of this repository.
 
 Copier asks four questions:
 
@@ -50,16 +45,27 @@ Copier uses the template's latest git tag. When the template has no tags, it use
 The project must be a git repository with nothing uncommitted. Run this from the same folder as the copy command:
 
 ```
-agent-project-template\.venv\Scripts\copier update my-new-project
+copier update my-new-project
 ```
 
-Copier finds the template through the path saved in the project's `.copier-answers.yml`. That path is the one typed in the copy command, so it only resolves from the folder where that command was run. Do not edit `.copier-answers.yml` by hand.
+Copier finds the template through the address saved in the project's `.copier-answers.yml`. That address is the one typed in the copy command. Do not edit `.copier-answers.yml` by hand.
 
 ## Run the tests
+
+You need a local copy of this repository. The tests need Python 3.11, 3.12, 3.13 or 3.14. Set up once, from this folder:
+
+```
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+```
+
+Then run the tests:
 
 ```
 .venv\Scripts\python -m pytest
 ```
+
+These commands are written for Windows. On macOS or Linux, use `.venv/bin/` in place of `.venv\Scripts\`.
 
 The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, that the gated paths given as an answer appear under "Approval gates", and that an answer with no gated paths is rejected.
 
