@@ -1,5 +1,7 @@
 # agent-project-template
 
+![tests](https://github.com/11thNomad/agent-project-template/actions/workflows/tests.yml/badge.svg)
+
 A [Copier](https://copier.readthedocs.io/) template for projects that are built by several AI agent sessions under one owner. A project made from it starts with three things: a spec skeleton, rules for builder sessions, and approval gates.
 
 ## What a new project contains
@@ -52,7 +54,9 @@ Copier finds the template through the address saved in the project's `.copier-an
 
 ## Run the tests
 
-You need a local copy of this repository. The tests need Python 3.11, 3.12, 3.13 or 3.14. Set up once, from this folder:
+GitHub runs the tests on every push to `main` and on every pull request. The workflow is `.github/workflows/tests.yml`. The badge at the top of this page shows its status.
+
+To run the tests yourself, you need a local copy of this repository. The tests need Python 3.11, 3.12, 3.13 or 3.14. Set up once, from this folder:
 
 ```
 python -m venv .venv
@@ -67,13 +71,15 @@ Then run the tests:
 
 These commands are written for Windows. On macOS or Linux, use `.venv/bin/` in place of `.venv\Scripts\`.
 
-The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, that the gated paths given as an answer appear under "Approval gates", and that an answer with no gated paths is rejected.
+The tests run offline and make no model calls. They render the template into a temporary folder and check that the required files exist, that `SPEC.md` and `CLAUDE.md` have every required section, that the answers are substituted, that no template markup is left, that the gated paths given as an answer appear under "Approval gates", and that an answer with no gated paths is rejected. They also check that the workflow agrees with this README.
+
+The workflow runs the commands above on Python 3.11, 3.12, 3.13 and 3.14, each on Linux (`ubuntu-latest`) and on Windows (`windows-latest`). It does not cover macOS.
 
 Tested with Copier 9.19.1 and pytest 9.2.0 on Python 3.13.1 and Windows 11. `requirements.txt` pins every installed package. The pinned packages do not install on Python 3.10. Python 3.15 is not covered: the pinned PyYAML has no wheel for it.
 
 ## AI involvement
 
-This template, its tests and this README were drafted with AI assistance (Claude).
+This template, its tests, its GitHub workflow and this README were drafted with AI assistance (Claude).
 
 ## Licence
 

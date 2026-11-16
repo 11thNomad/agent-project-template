@@ -1,0 +1,58 @@
+# Runs this repository's tests on GitHub.
+#
+# The run steps are the commands README.md gives under "Run the tests".
+# tests/test_workflow.py checks that this file and README.md agree.
+# Syntax: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+name: tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+# Read access to the repository's contents. GitHub sets every permission that
+# is not listed here to none.
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      # Let every job finish, so one failure does not hide the others.
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+        python-version:
+          - "3.11"
+          - "3.12"
+          - "3.13"
+          - "3.14"
+        # Where a virtual environment keeps its Python on each system.
+        include:
+          - os: ubuntu-latest
+            venv-python: .venv/bin/python
+          - os: windows-latest
+            venv-python: .venv\Scripts\python
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # No later step fetches or pushes, so the token stays out of the
+          # git config.
+          persist-credentials: false
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Make the virtual environment
+        run: python -m venv .venv
+      - name: Install the pinned packages
+        run: ${{ matrix.venv-python }} -m pip install -r requirements.txt
+      - name: Run the tests
+        run: ${{ matrix.venv-python }} -m pytest
